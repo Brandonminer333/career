@@ -25,6 +25,7 @@ jobs:
           persist-credentials: true
 
       - name: Compile LaTeX to PDF
+        shell: bash
         run: |
           mkdir -p pdf
           cd latex
