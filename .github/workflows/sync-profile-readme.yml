@@ -1,0 +1,48 @@
+name: Sync profile README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - GITHUB_README.md
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout career
+        uses: actions/checkout@v4
+
+      - name: Push README to Brandonminer333/Brandonminer333
+        env:
+          DEPLOY_KEY: ${{ secrets.PROFILE_README_DEPLOY_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${DEPLOY_KEY}" ]]; then
+            echo "PROFILE_README_DEPLOY_KEY secret is not configured." >&2
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          echo "${DEPLOY_KEY}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND='ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes'
+
+          git clone --depth 1 git@github.com:Brandonminer333/Brandonminer333.git target
+          cp GITHUB_README.md target/README.md
+
+          cd target
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+
+          if git diff --staged --quiet; then
+            echo "Profile README already up to date."
+            exit 0
+          fi
+
+          git commit -m "Sync profile README from career"
+          git push

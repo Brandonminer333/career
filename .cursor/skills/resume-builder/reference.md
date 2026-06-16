@@ -1,43 +1,43 @@
 # Resume Builder — CLI & API Reference
 
+All paths are under `resume/` unless noted. Commands assume the **career repo root** as the working directory.
+
 ## Canonical rebuild script
 
 Persists curated bullet IDs and trimmed skills for all four roles. **Run this after changing which bullets belong on canonical resumes.**
 
 ```bash
-python3 scripts/rebuild_canonical_resumes.py
+python3 resume/scripts/rebuild_canonical_resumes.py
 ```
 
 | Dict key | Purpose |
 |----------|---------|
 | `BUILDS[role]["items"]` | Ordered inventory IDs (education → experience → projects) |
-| `BUILDS[role]["output"]` | Target `.tex` path |
+| `BUILDS[role]["output"]` | Target `.tex` path (relative to `resume/`) |
 | `SKILLS[role]` | Trimmed LaTeX skills block |
 
 Roles: `ai-engineer`, `data-scientist`, `forward-deployed-engineer`, `public-technologist`.
 
 Outputs:
-- `latex/ai-engineer.tex`
-- `latex/data-science.tex`
-- `latex/forward-deployed-engineer.tex`
-- `latex/civic.tex`
+- `resume/latex/ai-engineer.tex`
+- `resume/latex/data-science.tex`
+- `resume/latex/forward-deployed-engineer.tex`
+- `resume/latex/civic.tex`
 
 ## Local PDF compile
 
 ```bash
-./scripts/build-pdfs.sh
+resume/scripts/build-pdfs.sh
 ```
 
-Requires Docker. Writes `pdf/<basename>.pdf` for each `latex/*.tex`.
+Requires Docker. Writes `resume/pdf/<basename>.pdf` for each `resume/latex/*.tex`.
 
 ## CLI
-
-All commands run from repo root.
 
 ### `roles`
 
 ```bash
-python resume_builder.py roles
+python resume/scripts/resume_builder.py roles
 ```
 
 Prints one role slug per line.
@@ -45,11 +45,11 @@ Prints one role slug per line.
 ### `inventory`
 
 ```bash
-python resume_builder.py inventory
-python resume_builder.py inventory --role ai-engineer
-python resume_builder.py inventory --role ai-engineer --include-commented
-python resume_builder.py inventory --include-untagged
-python resume_builder.py inventory --include-commented --include-untagged
+python resume/scripts/resume_builder.py inventory
+python resume/scripts/resume_builder.py inventory --role ai-engineer
+python resume/scripts/resume_builder.py inventory --role ai-engineer --include-commented
+python resume/scripts/resume_builder.py inventory --include-untagged
+python resume/scripts/resume_builder.py inventory --include-commented --include-untagged
 ```
 
 | Flag | Effect |
@@ -61,15 +61,15 @@ python resume_builder.py inventory --include-commented --include-untagged
 ### `build`
 
 ```bash
-python resume_builder.py build --role ai-engineer
-python resume_builder.py build --role ai-engineer --output latex/generated-ai-engineer.tex
-python resume_builder.py build \
+python resume/scripts/resume_builder.py build --role ai-engineer
+python resume/scripts/resume_builder.py build --role ai-engineer --output resume/latex/generated-ai-engineer.tex
+python resume/scripts/resume_builder.py build \
   --role ai-engineer \
   --tagline "AI Engineer \$|\$ ..." \
   --items id1,id2,id3 \
-  --output latex/ai-engineer.tex
-python resume_builder.py build --role data-scientist --include-commented
-python resume_builder.py build --role ai-engineer --include-untagged-projects
+  --output resume/latex/ai-engineer.tex
+python resume/scripts/resume_builder.py build --role data-scientist --include-commented
+python resume/scripts/resume_builder.py build --role ai-engineer --include-untagged-projects
 ```
 
 | Flag | Required | Effect |
@@ -77,7 +77,7 @@ python resume_builder.py build --role ai-engineer --include-untagged-projects
 | `--role` | One of `--role` or `--items` | Role slug for filtering and ACLU title |
 | `--tagline` | Required with `--items` | Header tagline (LaTeX; use `\$|\$` for `\|$`) |
 | `--items` | Optional | Comma-separated inventory IDs for curated build |
-| `--output` | Optional | Output path (default: `latex/generated-<role>.tex`) |
+| `--output` | Optional | Output path (default: `resume/latex/generated-<role>.tex`) |
 | `--include-commented` | Optional | Include commented master variants |
 | `--include-untagged-projects` | Optional | Include untagged project bullets for role filter |
 
@@ -103,14 +103,14 @@ items = get_items_for_role("ai-engineer", section="experience")
 json_str = inventory_as_json("ai-engineer")
 
 # Build
-path = build_resume(role="ai-engineer", output_path="latex/generated-ai-engineer.tex")
+path = build_resume(role="ai-engineer", output_path="resume/latex/generated-ai-engineer.tex")
 
 # Curated build
 path = build_resume(
     role="ai-engineer",
     tagline=r"AI Engineer $|$ Multi-modal pipelines...",
     item_ids=["experience-aclu-5", "experience-aclu-9"],
-    output_path="latex/ai-engineer.tex",
+    output_path="resume/latex/ai-engineer.tex",
 )
 
 # Manual assembly
@@ -121,7 +121,7 @@ resume = Resume.from_item_ids(
     inv,
     role="ai-engineer",
 )
-resume.save_to_file("latex/custom.tex")
+resume.save_to_file("resume/latex/custom.tex")
 ```
 
 ## Inventory item shape
@@ -145,13 +145,13 @@ Sections: `taglines`, `education`, `experience`, `projects`.
 
 Used when master has no tagged tagline for a role (all four current roles have tagged taglines in master; defaults remain as fallback).
 
-Defined in `resume_builder.py` → `ROLE_DEFAULTS` dict.
+Defined in `resume/scripts/resume_builder.py` → `ROLE_DEFAULTS` dict.
 
 ## Output document structure
 
 Generated `.tex` files contain:
 
-1. `PACKAGES` + `COMMANDS` (from `resume_builder.py`)
+1. `PACKAGES` + `COMMANDS` (from `resume/scripts/resume_builder.py`)
 2. Contact header + tagline
 3. Education (degrees always; USF courses if tagged/selected)
 4. Experience (role-formatted job headers)

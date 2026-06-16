@@ -2,7 +2,7 @@
 """
 Resume builder for role-specific LaTeX resumes.
 
-Parses latex/MASTER-RESUME.tex (tagged content inventory) and exposes tools for
+Parses resume/latex/MASTER-RESUME.tex (tagged content inventory) and exposes tools for
 an AI agent to query, select, and assemble job-targeted resumes.
 """
 
@@ -15,9 +15,9 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-REPO_ROOT = Path(__file__).resolve().parent
-MASTER_RESUME_PATH = REPO_ROOT / "latex" / "MASTER-RESUME.tex"
-LATEX_DIR = REPO_ROOT / "latex"
+RESUME_ROOT = Path(__file__).resolve().parent.parent
+MASTER_RESUME_PATH = RESUME_ROOT / "latex" / "MASTER-RESUME.tex"
+LATEX_DIR = RESUME_ROOT / "latex"
 
 PACKAGES = r"""
 \documentclass[letterpaper,11pt]{article}
@@ -1001,6 +1001,10 @@ def build_resume(
     if output_path is None:
         slug = role or "custom"
         output_path = LATEX_DIR / f"generated-{slug}.tex"
+    else:
+        output_path = Path(output_path)
+        if not output_path.is_absolute():
+            output_path = RESUME_ROOT / output_path
     return resume.save_to_file(output_path)
 
 

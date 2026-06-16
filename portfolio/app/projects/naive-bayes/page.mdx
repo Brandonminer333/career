@@ -1,0 +1,257 @@
+export const metadata = {
+  title: "Naive Bayes Questions and Discovered Answers",
+  description:
+    "Exploring how vocabulary size, sample size, document length, class count, and class imbalance affect a Naive Bayes classifier on synthetic data.",
+};
+
+# Naive Bayes Questions and Discovered Answers
+
+<nav aria-label="Project navigation" className="not-prose mb-6 flex flex-wrap gap-3">
+  <a href="https://github.com/Brandonminer333/Naive-Bayes-Exploration" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100">GitHub</a>
+</nav>
+
+## Setup
+
+```python
+from backend import *
+
+X, y = make_synthetic_data(n=500, w=50, c=2,
+                           avg_doc_length=50,
+                           class_sep=0.001,
+                           random_state=123)
+synth_acc = synthetic_model(X, y, random_state=123)
+print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.87
+```
+
+## Questions
+
+### How does vocabulary size vs sample size vs document size affect the model?
+
+```python
+ns = [50, 500, 5000, 50000]
+
+for num in ns:
+    X, y = make_synthetic_data(n=num, w=50, c=2,
+                                avg_doc_length=50,
+                                class_sep=0.001,
+                                random_state=123)
+    synth_acc = synthetic_model(X, y, random_state=123)
+    print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.9
+Accuracy: 0.87
+Accuracy: 0.855
+Accuracy: 0.8623
+```
+
+Holding other variables consistent, sample size adds noise. Not all data is "good" data: the data must provide meaningful evidence.
+
+```python
+ws = [50, 500, 5000, 50000]
+
+for num in ws:
+    X, y = make_synthetic_data(n=500, w=num, c=2,
+                                avg_doc_length=50,
+                                class_sep=0.001,
+                                random_state=123)
+    synth_acc = synthetic_model(X, y, random_state=123)
+    print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.87
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+```
+
+As vocabulary size increases, data becomes sparse and many words become one-to-one identifiers for classes.
+
+```python
+ds = [50, 500, 5000, 50000]
+
+for num in ds:
+    X, y = make_synthetic_data(n=500, w=50, c=2,
+                                avg_doc_length=num,
+                                class_sep=0.001,
+                                random_state=123)
+    synth_acc = synthetic_model(X, y, random_state=123)
+    print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.87
+Accuracy: 1.0
+Accuracy: 1.0
+Accuracy: 1.0
+```
+
+Increasing document size introduces many uniquely identifying words, making classification trivial.
+
+### How does increasing classes affect accuracy?
+
+Intuition: more classes usually require more data.
+
+```python
+cs = [i for i in range(2, 5)]
+ns = [50, 500, 5000, 50000]
+
+for num in cs:
+    X, y = make_synthetic_data(n=500, w=50, c=num,
+                                avg_doc_length=50,
+                                class_sep=0.001,
+                                random_state=123)
+    synth_acc = synthetic_model(X, y, random_state=123)
+    print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.87
+Accuracy: 0.65
+Accuracy: 0.56
+```
+
+Accuracy drops as number of classes increases.
+
+```python
+cs = [i for i in range(2, 6)]
+ns = [500, 50000, 500000, 500000]
+
+for i in range(0, 4):
+    X, y = make_synthetic_data(n=ns[i], w=50, c=cs[i],
+                                avg_doc_length=50,
+                                class_sep=0.001,
+                                random_state=123)
+    synth_acc = synthetic_model(X, y, random_state=123)
+    print("Accuracy:", synth_acc)
+```
+
+```text
+Accuracy: 0.87
+Accuracy: 0.7342
+Accuracy: 0.6835
+Accuracy: 0.64954
+```
+
+Sample size must increase very quickly when class count grows.
+
+### How does spam adding "non-spam gibberish" affect predictions?
+
+Intuition: shouldn't affect much.
+
+```python
+X, y = make_synthetic_data(
+    n=500, w=50, c=2,
+    avg_doc_length=50,
+    class_sep=0.001,
+    random_state=123
+)
+
+data = np.concatenate((X, y.reshape(-1, 1)), axis=1)
+
+data_0 = data[data[:, 50] == 0]
+data_1 = data[data[:, 50] == 1]
+
+for idx in range(len(data_1)):
+    rand_row = data_0[np.random.randint(0, len(data_0))]
+    data_1[idx, :50] = data_1[idx, :50] + rand_row[:50]
+    # Leave data_1[idx, 50] unchanged (the label stays 1)
+
+data = np.concatenate((data_0, data_1), axis=0)
+
+X_new = data[:, :50]
+y_new = data[:, 50]
+
+print(synthetic_model(X, y, random_state=123))
+print(synthetic_model(X_new, y_new, random_state=123))
+```
+
+```text
+0.87
+0.66
+```
+
+With heavily overlapping classes, adding noise reduces accuracy significantly.
+
+```python
+X, y = make_synthetic_data(
+    n=500, w=50, c=2,
+    avg_doc_length=50,
+    class_sep=0.01,
+    random_state=123
+)
+
+data = np.concatenate((X, y.reshape(-1, 1)), axis=1)
+
+data_0 = data[data[:, 50] == 0]
+data_1 = data[data[:, 50] == 1]
+
+for idx in range(len(data_1)):
+    rand_row = data_0[np.random.randint(0, len(data_0))]
+    data_1[idx, :50] = data_1[idx, :50] + rand_row[:50]
+
+data = np.concatenate((data_0, data_1), axis=0)
+
+X_new = data[:, :50]
+y_new = data[:, 50]
+
+print(synthetic_model(X, y, random_state=123))
+print(synthetic_model(X_new, y_new, random_state=123))
+```
+
+```text
+1.0
+0.94
+```
+
+With more separation, degradation is smaller.
+
+### How does large proportion difference affect the model?
+
+```python
+X, y = make_synthetic_data(
+    n=1000, w=50, c=2,
+    avg_doc_length=50,
+    class_sep=0.001,
+    random_state=123
+)
+
+# Probability of dropping class 1 examples (e.g., drop 90%)
+p_drop = 0.9
+
+# random draw: True = drop, False = keep
+drop_mask = np.random.rand(len(y)) < p_drop
+
+# keep = either class 0 OR (class 1 & not dropped)
+keep = (y == 0) | ((y == 1) & (~drop_mask))
+
+X_new = X[keep]
+y_new = y[keep]
+
+print("Original proportion of class 1:", np.mean(y))
+print("New proportion of class 1:", round(np.mean(y_new), 3))
+print()
+print(synthetic_model(X, y, random_state=123))
+print(round(synthetic_model(X_new, y_new, random_state=123), 3))
+print()
+print(synthetic_confusion(X_new, y_new))
+```
+
+```text
+Original proportion of class 1: 0.488
+New proportion of class 1: 0.092
+
+0.83
+0.929
+
+[[102   2]
+ [  7   2]]
+```
+
+Accuracy increases because nearly all examples belong to one class. But the model still predicts the minority class occasionally.

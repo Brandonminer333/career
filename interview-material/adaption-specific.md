@@ -22,7 +22,7 @@ Bullet points only. These are the main points to hit for each question — not a
 - Context: building a traffic stop auditor for the ACLU to flag officer noncompliance
 - Lead investigator asked me to build a model that could predict if a stop reason was legally justified
 - I knew immediately that was a fine-tuning problem, not a zero-shot problem
-- Had to explain to a non-technical investigator: pretrained models understand language, not law — we need labeled legal examples to bridge that gap
+- Had to explain to a non-technical investigator: pre-trained models understand language, not law — we need labeled legal examples to bridge that gap
 - They ended up getting 85 manually labeled examples across the full classification suite
 - Now we can actually fine-tune the language model into a legal model
 
@@ -40,7 +40,7 @@ Bullet points only. These are the main points to hit for each question — not a
 
 ## Q4: "In a forward deployed role you might not have mentors on site — you're the expert. How do you handle hitting a hard constraint with a customer?"
 
-- First: consider all possible options before bringing problems to the customer — State the problem and possible solutions
+- First: consider all possible options — if I'm bringing a problem to the customer, I should also bring possible solutions
 - Explore all available workarounds (augmentation, pseudo-labels, different model approaches, Adaption's own platform capabilities)
 - Come to the customer with honest assessment *plus* concrete options — not just problems
 - Transparency early matters: don't hide constraints, but don't surface them until you understand them

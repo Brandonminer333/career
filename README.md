@@ -1,20 +1,31 @@
-# Brandon Miner's Resumes by Job Title
+# Brandon Miner's Career Repo
 
-Organized, specialized resumes for four overlapping tech roles. Each role has a **job guide** (research + resume checklist) and a matching **`.tex`** file for Overleaf.
+Resumes, interview prep, portfolio source, and public GitHub profile content.
 
-## Roles
+## Resumes
+
+Specialized resumes for four overlapping tech roles. Each role has a **job guide** (research + resume checklist) and a matching **`.tex`** file.
 
 | Role | Guide | LaTeX |
 |------|-------|-------|
-| AI Engineer | [AI-ENGINEER.md](job-titles/AI-ENGINEER.md) | [ai-engineer.tex](latex/ai-engineer.tex) |
-| Data Scientist | [DATA-SCIENTIST.md](job-titles/DATA-SCIENTIST.md) | [data-science.tex](latex/data-science.tex) |
-| Forward Deployed Engineer | [FORWARD-DEPLOYED-ENGINEER.md](job-titles/FORWARD-DEPLOYED-ENGINEER.md) | [forward-deployed-engineer.tex](latex/forward-deployed-engineer.tex) |
-| Public Technologist | [PUBLIC-TECHNOLOGIST.md](job-titles/PUBLIC-TECHNOLOGIST.md) | [civic.tex](latex/civic.tex) |
+| AI Engineer | [AI-ENGINEER.md](resume/job-titles/AI-ENGINEER.md) | [ai-engineer.tex](resume/latex/ai-engineer.tex) |
+| Data Scientist | [DATA-SCIENTIST.md](resume/job-titles/DATA-SCIENTIST.md) | [data-science.tex](resume/latex/data-science.tex) |
+| Forward Deployed Engineer | [FORWARD-DEPLOYED-ENGINEER.md](resume/job-titles/FORWARD-DEPLOYED-ENGINEER.md) | [forward-deployed-engineer.tex](resume/latex/forward-deployed-engineer.tex) |
+| Public Technologist | [PUBLIC-TECHNOLOGIST.md](resume/job-titles/PUBLIC-TECHNOLOGIST.md) | [civic.tex](resume/latex/civic.tex) |
 
-**Master inventory (not for applications):** [MASTER-RESUME.tex](latex/MASTER-RESUME.tex)
+**Master inventory (not for applications):** [MASTER-RESUME.tex](resume/latex/MASTER-RESUME.tex)
 
-**Builder:** `python resume_builder.py roles` — see [.cursor/skills/resume-builder/SKILL.md](.cursor/skills/resume-builder/SKILL.md).
+**Builder:** `python resume/scripts/resume_builder.py roles` — see [.cursor/skills/resume-builder/SKILL.md](.cursor/skills/resume-builder/SKILL.md).
 
-**Rebuild canonical resumes:** `python3 scripts/rebuild_canonical_resumes.py` (after curating bullet IDs).
+**Rebuild canonical resumes:** `python3 resume/scripts/rebuild_canonical_resumes.py` (after curating bullet IDs).
 
-**PDFs:** [pdf/](pdf/) — compile locally with `./scripts/build-pdfs.sh` (requires [Docker](https://www.docker.com/); pulls `ghcr.io/xu-cheng/texlive-debian` on first run). Output: `pdf/<tex-basename>.pdf` for each file in `latex/`. Pushing `latex/**` to `main` also rebuilds PDFs via GitHub Actions.
+**PDFs:** [resume/pdf/](resume/pdf/) — compile locally with `resume/scripts/build-pdfs.sh` (requires [Docker](https://www.docker.com/); pulls `ghcr.io/xu-cheng/texlive-debian` on first run).
+
+## Public presence
+
+| Asset | Source in this repo | Published to |
+|-------|---------------------|--------------|
+| GitHub profile README | [GITHUB_README.md](GITHUB_README.md) | [Brandonminer333/Brandonminer333](https://github.com/Brandonminer333/Brandonminer333) via GitHub Actions |
+| Portfolio site | [portfolio/](portfolio/) | [Vercel](https://brandonminer-portfolio.vercel.app/) |
+
+Profile README sync requires the `PROFILE_README_DEPLOY_KEY` repository secret (SSH deploy key with write access to `Brandonminer333/Brandonminer333`).
