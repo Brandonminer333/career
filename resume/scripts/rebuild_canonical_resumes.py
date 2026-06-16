@@ -83,8 +83,8 @@ BUILDS: dict[str, dict[str, object]] = {
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-9",
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-15",
             "projects-parkcast-sf-san-francisco-parking-assistant-1",
-            "projects-parkcast-sf-san-francisco-parking-assistant-4",
-            "projects-parkcast-sf-san-francisco-parking-assistant-7",
+            "projects-parkcast-sf-san-francisco-parking-assistant-2",
+            "projects-parkcast-sf-san-francisco-parking-assistant-3",
             "projects-credit-card-fraud-detection-title-variants-below-2",
             "projects-credit-card-fraud-detection-title-variants-below-8",
         ],
@@ -108,7 +108,6 @@ BUILDS: dict[str, dict[str, object]] = {
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-17",
             "projects-credit-card-fraud-detection-title-variants-below-4",
             "projects-credit-card-fraud-detection-title-variants-below-10",
-            "projects-parkcast-sf-san-francisco-parking-assistant-3",
         ],
     },
     "forward-deployed-engineer": {
@@ -130,6 +129,9 @@ BUILDS: dict[str, dict[str, object]] = {
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-7",
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-10",
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-16",
+            "projects-parkcast-sf-san-francisco-parking-assistant-1",
+            "projects-parkcast-sf-san-francisco-parking-assistant-2",
+            "projects-parkcast-sf-san-francisco-parking-assistant-3",
         ],
     },
     "public-technologist": {

@@ -159,9 +159,9 @@
         \resumeProjectHeading
         {\textbf{Parkcast-SF: San Francisco Parking Assistant}}{}
         \resumeItemListStart
-            \resumeItem{Designed the full system architecture for an urban parking assistant app using historical meter data, location-based modeling, and production-ready MLOps.}
-            \resumeItem{Implemented a challenger/champion model framework with a new challenger deployed every 3 days to continuously test and improve production performance.}
-            \resumeItem{Created a separate Cloud Run instance to host \textbf{MLflow} for upstream challenger/champion experiment tracking and model evaluation.}
+            \resumeItem{Owned system design and the production \textbf{FastAPI} inference API for a full-stack USF capstone parking platform, serving block-level \textbf{LightGBM} occupancy predictions from artifacts in \textbf{GCS}.}
+            \resumeItem{Applied \textbf{K-nearest neighbors}-derived baselines to support \textbf{LightGBM} inference on sparse, non-metered blocks where direct sensor history was unavailable.}
+            \resumeItem{Built automated model \textbf{CI/CD} on \textbf{GCP}: scheduled \textbf{GitHub Actions} retraining with \textbf{MLflow} experiment tracking and a \textbf{champion/challenger} promotion gate (validation MAE) before GCS upload; split deploy across \textbf{Vercel} (frontend) and \textbf{Cloud Run} (API).}
         \resumeItemListEnd
 
         \resumeProjectHeading

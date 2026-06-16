@@ -234,13 +234,16 @@
         \resumeProjectHeading
         {\textbf{Parkcast-SF: San Francisco Parking Assistant}}{}
         \resumeItemListStart
-            \resumeItem{Designed the full system architecture for an urban parking assistant app using historical meter data, location-based modeling, and production-ready MLOps. \textit{[ai-engineer, forward-deployed-engineer]}}
-            \resumeItem{Built a Vercel frontend to interact with users and a Google Cloud Run API entrypoint to serve backend predictions and handle app traffic. \textit{[ai-engineer, forward-deployed-engineer]}}
-            \resumeItem{Predicted parking availability across SF using historical parking meter records; where meters were unavailable, applied a \textbf{K-nearest neighbors} approximation to infer nearby parking availability. \textit{[data-scientist, ai-engineer]}}
-            \resumeItem{Implemented a challenger/champion model framework with a new challenger deployed every 3 days to continuously test and improve production performance. \textit{[ai-engineer, forward-deployed-engineer]}}
-            \resumeItem{Used OpenStreetMap and Mapbox to simulate Google Maps mapping experience and support navigation/visualization without Google Maps dependency. \textit{[forward-deployed-engineer]}}
-            \resumeItem{Automated data ingestion into a Google Cloud Storage data lake using GitHub Actions, supporting reproducible model retraining and feature updates. \textit{[ai-engineer, forward-deployed-engineer]}}
-            \resumeItem{Created a separate Cloud Run instance to host \textbf{MLflow} for upstream challenger/champion experiment tracking and model evaluation. \textit{[ai-engineer, data-scientist]}}
+            \resumeItem{Owned system design and the production \textbf{FastAPI} inference API for a full-stack USF capstone parking platform, serving block-level \textbf{LightGBM} occupancy predictions from artifacts in \textbf{GCS}. \textit{[ai-engineer, forward-deployed-engineer]}}
+            \resumeItem{Applied \textbf{K-nearest neighbors}-derived baselines to support \textbf{LightGBM} inference on sparse, non-metered blocks where direct sensor history was unavailable. \textit{[ai-engineer, forward-deployed-engineer]}}
+            \resumeItem{Built automated model \textbf{CI/CD} on \textbf{GCP}: scheduled \textbf{GitHub Actions} retraining with \textbf{MLflow} experiment tracking and a \textbf{champion/challenger} promotion gate (validation MAE) before GCS upload; split deploy across \textbf{Vercel} (frontend) and \textbf{Cloud Run} (API). \textit{[ai-engineer, forward-deployed-engineer]}}
+            \resumeItem{Designed the full system architecture for an urban parking assistant app using historical meter data, location-based modeling, and production-ready MLOps. \textit{[ai-engineer, forward-deployed-engineer, commented]}}
+            \resumeItem{Built a Vercel frontend to interact with users and a Google Cloud Run API entrypoint to serve backend predictions and handle app traffic. \textit{[ai-engineer, forward-deployed-engineer, commented]}}
+            \resumeItem{Predicted parking availability across SF using historical parking meter records; where meters were unavailable, applied a \textbf{K-nearest neighbors} approximation to infer nearby parking availability. \textit{[data-scientist, ai-engineer, commented]}}
+            \resumeItem{Implemented a challenger/champion model framework with a new challenger deployed every 3 days to continuously test and improve production performance. \textit{[ai-engineer, forward-deployed-engineer, commented]}}
+            \resumeItem{Used OpenStreetMap and Mapbox to simulate Google Maps mapping experience and support navigation/visualization without Google Maps dependency. \textit{[forward-deployed-engineer, commented]}}
+            \resumeItem{Automated data ingestion into a Google Cloud Storage data lake using GitHub Actions, supporting reproducible model retraining and feature updates. \textit{[ai-engineer, forward-deployed-engineer, commented]}}
+            \resumeItem{Created a separate Cloud Run instance to host \textbf{MLflow} for upstream challenger/champion experiment tracking and model evaluation. \textit{[ai-engineer, data-scientist, commented]}}
         \resumeItemListEnd
 
         \resumeProjectHeading

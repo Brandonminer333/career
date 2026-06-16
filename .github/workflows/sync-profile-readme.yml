@@ -28,6 +28,22 @@ jobs:
           mkdir -p ~/.ssh
           echo "${DEPLOY_KEY}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+
+          # #region agent log
+          KEY_LINES=$(wc -l < ~/.ssh/deploy_key | tr -d ' ')
+          KEY_BYTES=$(wc -c < ~/.ssh/deploy_key | tr -d ' ')
+          KEY_BEGIN=$(head -1 ~/.ssh/deploy_key)
+          KEY_END=$(tail -1 ~/.ssh/deploy_key)
+          echo "debug deploy_key lines=${KEY_LINES} bytes=${KEY_BYTES}"
+          echo "debug deploy_key begin=${KEY_BEGIN}"
+          echo "debug deploy_key end=${KEY_END}"
+          if ssh-keygen -l -f ~/.ssh/deploy_key >/tmp/deploy_key_probe.out 2>/tmp/deploy_key_probe.err; then
+            echo "debug ssh-keygen ok: $(cat /tmp/deploy_key_probe.out)"
+          else
+            echo "debug ssh-keygen failed: $(cat /tmp/deploy_key_probe.err)"
+          fi
+          # #endregion
+
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           export GIT_SSH_COMMAND='ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes'
 
