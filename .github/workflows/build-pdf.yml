@@ -22,6 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
+          ref: ${{ github.head_ref || github.ref_name }}
           persist-credentials: true
 
       - name: Compile LaTeX to PDF
@@ -48,7 +49,7 @@ jobs:
           exit "$failed"
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: compiled-pdfs
           path: pdf/*.pdf
