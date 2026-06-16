@@ -43,3 +43,10 @@ docker run --rm --platform linux/amd64 \
   '
 
 echo "PDFs written to ${ROOT}/pdf/"
+
+PORTFOLIO_RESUME="${PORTFOLIO_RESUME:-forward-deployed-engineer}"
+if [[ -f "${ROOT}/pdf/${PORTFOLIO_RESUME}.pdf" ]]; then
+  "$(dirname "$0")/sync-portfolio-resume.sh"
+else
+  echo "note: ${PORTFOLIO_RESUME}.pdf not produced; skipping portfolio resume sync" >&2
+fi

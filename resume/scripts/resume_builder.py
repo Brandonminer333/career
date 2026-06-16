@@ -105,7 +105,7 @@ HEADER = r"""
         % EMAIL
         \href{mailto:brandonm333@outlook.com}{\raisebox{-0.2\height}\ {brandonm333@outlook.com}} ~
         % PHONE
-        \href{callto:+1 408-335-5436}{\raisebox{-0.2\height}\ {+1 408-335-5436}} ~
+        % \href{callto:+1 408-335-5436}{\raisebox{-0.2\height}\ {+1 408-335-5436}} ~
         % LINKEDIN
         \href{https://www.linkedin.com/in/brandon-miner-3x3}{\raisebox{-0.2\height}{linkedin.com/in/brandon-miner-3x3}}  ~
         % GITHUB
@@ -124,28 +124,28 @@ SECTION_PATTERN = re.compile(r"\\section\{([^}]+)\}")
 ROLE_DEFAULTS: dict[str, dict[str, Any]] = {
     "ai-engineer": {
         "tagline": (
-            "AI Engineer $|$ Multi-modal pipelines, LLM-assisted labeling, "
+            "AI Engineer — Multi-modal pipelines, LLM-assisted labeling, "
             "and production inference for unstructured video and text"
         ),
         "aclu_title": "AI/ML Engineer",
     },
     "public-technologist": {
         "tagline": (
-            "Public Technologist $|$ Data systems for civil liberties, "
+            "Public Technologist — Data systems for civil liberties, "
             "government accountability, and privacy advocacy"
         ),
         "aclu_title": "Data Scientist",
     },
     "data-scientist": {
         "tagline": (
-            "Data Scientist $|$ Statistical modeling, NLP pipelines, and "
+            "Data Scientist — Statistical modeling, NLP pipelines, and "
             "end-to-end ML products in civic and public-interest contexts"
         ),
         "aclu_title": "Data Scientist",
     },
     "forward-deployed-engineer": {
         "tagline": (
-            "Forward Deployed Engineer $|$ End-to-end ML systems on customer "
+            "Forward Deployed Engineer — End-to-end ML systems on customer "
             "infrastructure --- from stakeholder needs through production deployment"
         ),
         "aclu_title": "Forward Deployed Engineer",

@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from resume_builder import ROLE_DEFAULTS, build_resume, get_inventory
+from resume_builder import build_resume, get_inventory
 
 SKILLS: dict[str, str] = {
     "ai-engineer": r"""\vspace{-7pt}
@@ -156,11 +156,11 @@ BUILDS: dict[str, dict[str, object]] = {
 
 
 def main() -> None:
-    get_inventory(refresh=True)
+    inv = get_inventory(refresh=True)
     for role, cfg in BUILDS.items():
         path = build_resume(
             role=role,
-            tagline=ROLE_DEFAULTS[role]["tagline"],
+            tagline=inv._tagline_for_role(role),
             item_ids=cfg["items"],  # type: ignore[arg-type]
             output_path=cfg["output"],  # type: ignore[arg-type]
             skills_latex=SKILLS[role],
