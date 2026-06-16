@@ -1,0 +1,59 @@
+name: Build LaTeX PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'latex/**'
+  pull_request:
+    paths:
+      - 'latex/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/xu-cheng/texlive-debian:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX to PDF
+        run: |
+          mkdir -p pdf
+          cd latex
+          shopt -s nullglob
+          failed=0
+          for tex in *.tex; do
+            base="${tex%.tex}"
+            echo "==> Building ${tex}"
+            pdflatex -interaction=nonstopmode "$tex" > /dev/null
+            pdflatex -interaction=nonstopmode "$tex" > /dev/null
+            if [[ ! -f "${base}.pdf" ]]; then
+              echo "ERROR: ${base}.pdf was not produced"
+              tail -30 "${base}.log" 2>/dev/null || true
+              failed=1
+              continue
+            fi
+            mv -f "${base}.pdf" "../pdf/${base}.pdf"
+            rm -f "${base}.aux" "${base}.log" "${base}.out"
+          done
+          exit "$failed"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-pdfs
+          path: pdf/*.pdf
+          retention-days: 30
+
+      - name: Commit PDFs to repository
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: rebuild PDFs from LaTeX'
+          file_pattern: pdf/*.pdf
