@@ -1,5 +1,35 @@
 # Resume Builder — CLI & API Reference
 
+## Canonical rebuild script
+
+Persists curated bullet IDs and trimmed skills for all four roles. **Run this after changing which bullets belong on canonical resumes.**
+
+```bash
+python3 scripts/rebuild_canonical_resumes.py
+```
+
+| Dict key | Purpose |
+|----------|---------|
+| `BUILDS[role]["items"]` | Ordered inventory IDs (education → experience → projects) |
+| `BUILDS[role]["output"]` | Target `.tex` path |
+| `SKILLS[role]` | Trimmed LaTeX skills block |
+
+Roles: `ai-engineer`, `data-scientist`, `forward-deployed-engineer`, `public-technologist`.
+
+Outputs:
+- `latex/ai-engineer.tex`
+- `latex/data-science.tex`
+- `latex/forward-deployed-engineer.tex`
+- `latex/civic.tex`
+
+## Local PDF compile
+
+```bash
+./scripts/build-pdfs.sh
+```
+
+Requires Docker. Writes `pdf/<basename>.pdf` for each `latex/*.tex`.
+
 ## CLI
 
 All commands run from repo root.

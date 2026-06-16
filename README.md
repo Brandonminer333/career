@@ -15,4 +15,6 @@ Organized, specialized resumes for four overlapping tech roles. Each role has a 
 
 **Builder:** `python resume_builder.py roles` — see [.cursor/skills/resume-builder/SKILL.md](.cursor/skills/resume-builder/SKILL.md).
 
-**PDFs:** [pdf/](pdf/)
+**Rebuild canonical resumes:** `python3 scripts/rebuild_canonical_resumes.py` (after curating bullet IDs).
+
+**PDFs:** [pdf/](pdf/) — compile locally with `./scripts/build-pdfs.sh` (requires [Docker](https://www.docker.com/); pulls `ghcr.io/xu-cheng/texlive-debian` on first run). Output: `pdf/<tex-basename>.pdf` for each file in `latex/`. Pushing `latex/**` to `main` also rebuilds PDFs via GitHub Actions.
