@@ -20,7 +20,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: true
 
       - name: Compile LaTeX to PDF
         run: |
@@ -45,7 +47,7 @@ jobs:
           exit "$failed"
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: compiled-pdfs
           path: pdf/*.pdf
@@ -53,7 +55,7 @@ jobs:
 
       - name: Commit PDFs to repository
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: 'chore: rebuild PDFs from LaTeX'
           file_pattern: pdf/*.pdf
