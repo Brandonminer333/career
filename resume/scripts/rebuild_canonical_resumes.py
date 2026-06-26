@@ -8,7 +8,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from resume_builder import build_resume, get_inventory
+from resume_builder import (
+    RESUME_MAX_PROJECTS,
+    apply_resume_item_policies,
+    build_resume,
+    get_inventory,
+)
 
 SKILLS: dict[str, str] = {
     "ai-engineer": r"""\vspace{-7pt}
@@ -61,14 +66,12 @@ SKILLS: dict[str, str] = {
     \end{itemize}""",
 }
 
+# Ordered inventory IDs. USF course IDs are stripped by apply_resume_item_policies.
+# Only the first RESUME_MAX_PROJECTS project groups are kept (in list order).
 BUILDS: dict[str, dict[str, object]] = {
     "ai-engineer": {
         "output": "latex/ai-engineer.tex",
         "items": [
-            "education-university-of-san-francisco-1",
-            "education-university-of-san-francisco-2",
-            "education-university-of-san-francisco-4",
-            "education-university-of-san-francisco-6",
             "experience-aclu-3",
             "experience-aclu-10",
             "experience-aclu-16",
@@ -79,12 +82,10 @@ BUILDS: dict[str, dict[str, object]] = {
             "projects-genai-franchise-personality-quiz-1",
             "projects-genai-franchise-personality-quiz-2",
             "projects-genai-franchise-personality-quiz-3",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-6",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-9",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-15",
             "projects-parkcast-sf-san-francisco-parking-assistant-1",
             "projects-parkcast-sf-san-francisco-parking-assistant-2",
             "projects-parkcast-sf-san-francisco-parking-assistant-3",
+            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-6",
             "projects-credit-card-fraud-detection-title-variants-below-2",
             "projects-credit-card-fraud-detection-title-variants-below-8",
         ],
@@ -92,10 +93,6 @@ BUILDS: dict[str, dict[str, object]] = {
     "data-scientist": {
         "output": "latex/data-science.tex",
         "items": [
-            "education-university-of-san-francisco-1",
-            "education-university-of-san-francisco-2",
-            "education-university-of-san-francisco-4",
-            "education-university-of-san-francisco-5",
             "experience-aclu-2",
             "experience-aclu-9",
             "experience-aclu-14",
@@ -108,15 +105,12 @@ BUILDS: dict[str, dict[str, object]] = {
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-17",
             "projects-credit-card-fraud-detection-title-variants-below-4",
             "projects-credit-card-fraud-detection-title-variants-below-10",
+            "projects-parkcast-sf-san-francisco-parking-assistant-3",
         ],
     },
     "forward-deployed-engineer": {
         "output": "latex/forward-deployed-engineer.tex",
         "items": [
-            "education-university-of-san-francisco-1",
-            "education-university-of-san-francisco-2",
-            "education-university-of-san-francisco-3",
-            "education-university-of-san-francisco-6",
             "experience-aclu-6",
             "experience-aclu-12",
             "experience-aclu-16",
@@ -126,20 +120,17 @@ BUILDS: dict[str, dict[str, object]] = {
             "experience-san-diego-county-taxpayers-association-17",
             "projects-genai-franchise-personality-quiz-1",
             "projects-genai-franchise-personality-quiz-3",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-7",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-10",
-            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-16",
             "projects-parkcast-sf-san-francisco-parking-assistant-1",
             "projects-parkcast-sf-san-francisco-parking-assistant-2",
             "projects-parkcast-sf-san-francisco-parking-assistant-3",
+            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-7",
+            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-10",
+            "projects-california-grape-etl-pipeline-dashboard-title-variants-below-16",
         ],
     },
     "public-technologist": {
         "output": "latex/civic.tex",
         "items": [
-            "education-university-of-san-francisco-4",
-            "education-university-of-san-francisco-6",
-            "education-university-of-san-francisco-7",
             "experience-aclu-7",
             "experience-aclu-13",
             "experience-aclu-22",
@@ -150,6 +141,7 @@ BUILDS: dict[str, dict[str, object]] = {
             "experience-san-diego-county-taxpayers-association-18",
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-8",
             "projects-california-grape-etl-pipeline-dashboard-title-variants-below-12",
+            "projects-credit-card-fraud-detection-title-variants-below-4",
         ],
     },
 }
@@ -158,10 +150,12 @@ BUILDS: dict[str, dict[str, object]] = {
 def main() -> None:
     inv = get_inventory(refresh=True)
     for role, cfg in BUILDS.items():
+        raw_items: list[str] = cfg["items"]  # type: ignore[assignment]
+        items = apply_resume_item_policies(raw_items, inv, max_projects=RESUME_MAX_PROJECTS)
         path = build_resume(
             role=role,
             tagline=inv._tagline_for_role(role),
-            item_ids=cfg["items"],  # type: ignore[arg-type]
+            item_ids=items,
             output_path=cfg["output"],  # type: ignore[arg-type]
             skills_latex=SKILLS[role],
         )

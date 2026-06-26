@@ -54,7 +54,8 @@ The role overlaps heavily with **Forward Deployed Engineer** (customer-facing de
 - [ ] **ACLU title:** `AI/ML Engineer`.
 - [ ] **4 ACLU bullets:** Platform architecture → GPU/Whisper/LLM labeling → multi-stage NLP classifiers → React/FastAPI deploy.
 - [ ] **3 SD bullets:** ML-driven insights + NLP entity standardization + regression/mixed-effects where relevant.
-- [ ] **Projects:** Quiz app and/or Parkcast + Credit Card Fraud + California Grape (pick 2–3).
+- [ ] **Projects:** At most **2** technical project sections (order in `BUILDS` = priority).
+- [ ] **Education:** Degrees only on application resumes — no USF course list (courses stay on CV).
 - [ ] **Skills:** LLMs, RAG/agent patterns, Whisper, PyTorch, FastAPI, Docker, evaluation/inference first.
 
 ## Suggested tagline

@@ -53,7 +53,8 @@ Overlaps with **Data Scientist** (policy analysis, public datasets), **AI Engine
 - [ ] **ACLU title:** `Data Scientist` or `AI/ML Engineer` (nonprofits often use accessible titles).
 - [ ] **5 ACLU bullets:** Agile/platform for oversight → ETL for legal review → secure delivery → geospatial initiative → spatial pipeline exhibits.
 - [ ] **3 SD bullets:** Civic research leadership → public wage findings → homelessness program efficacy.
-- [ ] **1 project:** California Grape Public Dashboard (2 bullets max).
+- [ ] **Projects:** At most **2** technical project sections (often California Grape only).
+- [ ] **Education:** Degrees only on application resumes — no USF course list (courses stay on CV).
 - [ ] **Education:** MLOps + Deep Learning + CS for Data Science (depth for tech-policy roles).
 
 ## Suggested tagline

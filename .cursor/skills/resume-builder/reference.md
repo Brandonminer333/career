@@ -12,7 +12,7 @@ python3 resume/scripts/rebuild_canonical_resumes.py
 
 | Dict key | Purpose |
 |----------|---------|
-| `BUILDS[role]["items"]` | Ordered inventory IDs (education → experience → projects) |
+| `BUILDS[role]["items"]` | Ordered inventory IDs (experience → projects; no USF courses) |
 | `BUILDS[role]["output"]` | Target `.tex` path (relative to `resume/`) |
 | `SKILLS[role]` | Trimmed LaTeX skills block |
 

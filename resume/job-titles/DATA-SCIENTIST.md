@@ -52,7 +52,8 @@ Overlaps with **AI Engineer** (NLP/classification pipelines), **Forward Deployed
 - [ ] **ACLU title:** `Data Scientist`.
 - [ ] **4 ACLU bullets:** Product/platform → ETL + labeling → trained classifiers → stakeholder delivery.
 - [ ] **3 SD bullets:** Team leadership + statistical insights → scraping/NLP + regression → mixed-effects recommendations.
-- [ ] **Projects:** California Grape + Credit Card Fraud (+ Parkcast if modeling-forward JD).
+- [ ] **Projects:** At most **2** technical project sections (e.g. California Grape + Credit Card Fraud).
+- [ ] **Education:** Degrees only on application resumes — no USF course list (courses stay on CV).
 - [ ] **Education:** Experiments in Data Science; ML/Distributed Computing as supporting coursework.
 
 ## Suggested tagline

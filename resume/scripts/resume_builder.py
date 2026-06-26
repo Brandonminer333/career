@@ -2,7 +2,7 @@
 """
 Resume builder for role-specific LaTeX resumes.
 
-Parses resume/latex/MASTER-RESUME.tex (tagged content inventory) and exposes tools for
+Parses resume/latex/CURRICULUM-VITAE.tex (tagged content inventory) and exposes tools for
 an AI agent to query, select, and assemble job-targeted resumes.
 """
 
@@ -16,8 +16,12 @@ from pathlib import Path
 from typing import Any
 
 RESUME_ROOT = Path(__file__).resolve().parent.parent
-MASTER_RESUME_PATH = RESUME_ROOT / "latex" / "MASTER-RESUME.tex"
+CV_PATH = RESUME_ROOT / "latex" / "CURRICULUM-VITAE.tex"
 LATEX_DIR = RESUME_ROOT / "latex"
+
+# Application resumes (not the CV): omit USF course lists; cap project sections.
+RESUME_MAX_PROJECTS = 2
+EDUCATION_COURSE_ID_PREFIX = "education-university-of-san-francisco-"
 
 PACKAGES = r"""
 \documentclass[letterpaper,11pt]{article}
@@ -168,7 +172,7 @@ ACLU_JOB_BASE = {
 
 @dataclass
 class InventoryItem:
-    """A single tagged (or untagged) bullet from MASTER-RESUME.tex."""
+    """A single tagged (or untagged) bullet from CURRICULUM-VITAE.tex."""
 
     id: str
     section: str
@@ -595,8 +599,43 @@ def parse_skills(section_text: str) -> str:
     return section_text.strip()
 
 
+def apply_resume_item_policies(
+    item_ids: list[str],
+    inventory: MasterInventory,
+    *,
+    max_projects: int = RESUME_MAX_PROJECTS,
+    include_education_courses: bool = False,
+) -> list[str]:
+    """Trim curated IDs for one-page application resumes (not the CV)."""
+    filtered: list[str] = []
+    project_keys: list[str] = []
+
+    for item_id in item_ids:
+        item = inventory.items_by_id.get(item_id)
+        if item is None:
+            continue
+
+        if (
+            not include_education_courses
+            and item.section == "education"
+            and item_id.startswith(EDUCATION_COURSE_ID_PREFIX)
+        ):
+            continue
+
+        if item.section == "projects":
+            key = item.subsection
+            if key not in project_keys:
+                if len(project_keys) >= max_projects:
+                    continue
+                project_keys.append(key)
+
+        filtered.append(item_id)
+
+    return filtered
+
+
 def load_inventory(path: Path | None = None) -> MasterInventory:
-    source = Path(path) if path else MASTER_RESUME_PATH
+    source = Path(path) if path else CV_PATH
     text = source.read_text(encoding="utf-8")
     sections = parse_sections(text)
     counters: dict[str, int] = {}
@@ -1068,7 +1107,7 @@ def inventory_as_json(
 
 def _build_cli_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Parse MASTER-RESUME.tex and build role-specific resumes."
+        description="Parse CURRICULUM-VITAE.tex and build role-specific resumes."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 

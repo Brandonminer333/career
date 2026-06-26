@@ -13,7 +13,7 @@ Specialized resumes for four overlapping tech roles. Each role has a **job guide
 | Forward Deployed Engineer | [FORWARD-DEPLOYED-ENGINEER.md](resume/job-titles/FORWARD-DEPLOYED-ENGINEER.md) | [forward-deployed-engineer.tex](resume/latex/forward-deployed-engineer.tex) |
 | Public Technologist | [PUBLIC-TECHNOLOGIST.md](resume/job-titles/PUBLIC-TECHNOLOGIST.md) | [civic.tex](resume/latex/civic.tex) |
 
-**Master inventory (not for applications):** [MASTER-RESUME.tex](resume/latex/MASTER-RESUME.tex)
+**CV inventory (not for applications):** [CURRICULUM-VITAE.tex](resume/latex/CURRICULUM-VITAE.tex)
 
 **Builder:** `python resume/scripts/resume_builder.py roles` — see [.cursor/skills/resume-builder/SKILL.md](.cursor/skills/resume-builder/SKILL.md).
 

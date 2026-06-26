@@ -1,26 +1,37 @@
 ---
 name: resume-builder
 description: >-
-  Build and tailor role-specific LaTeX resumes from MASTER-RESUME.tex using
+  Build and tailor role-specific LaTeX resumes from CURRICULUM-VITAE.tex using
   resume_builder.py and resume/scripts/rebuild_canonical_resumes.py. Use when the
   user asks to create, update, or optimize a resume for a job title (AI Engineer,
   Data Scientist, Forward Deployed Engineer, Public Technologist), work with
-  resume/latex/MASTER-RESUME.tex, compare role variants, pick bullets, rebuild
-  canonical .tex files, or compile application-ready PDFs from the master inventory.
+  resume/latex/CURRICULUM-VITAE.tex, compare role variants, pick bullets, rebuild
+  canonical .tex files, or compile application-ready PDFs from the CV inventory.
 ---
 
 # Resume Builder
 
-All resume assets live under **`resume/`**. The master inventory is `resume/latex/MASTER-RESUME.tex`; role-specific resumes are `resume/latex/<role>.tex`. Use `resume/scripts/resume_builder.py` to query tagged content; use `resume/scripts/rebuild_canonical_resumes.py` to persist curated selections and regenerate canonical files.
+All resume assets live under **`resume/`**. The full inventory is `resume/latex/CURRICULUM-VITAE.tex` (CV); one-page application resumes are `resume/latex/<role>.tex`. Use `resume/scripts/resume_builder.py` to query tagged content; use `resume/scripts/rebuild_canonical_resumes.py` to persist curated selections and regenerate canonical files.
 
-**Do not submit MASTER-RESUME.tex** — it is intentionally bloated with every bullet variant.
+**Do not submit CURRICULUM-VITAE.tex** — it is intentionally bloated with every bullet variant.
+
+## CV vs application resume
+
+| | **CV** (`CURRICULUM-VITAE.tex`) | **Application resume** (`<role>.tex`) |
+|--|--------------------------------|--------------------------------------|
+| Purpose | Full inventory / reference | Job applications (target: 1 page) |
+| USF course list | Include tagged courses | **Omit** (degrees only) |
+| Technical projects | All variants | **At most 2** project sections |
+| Enforcement | Manual (compile as-is) | `apply_resume_item_policies()` in rebuild script |
+
+When curating `BUILDS[role].items`, list experience and project IDs in priority order — only the **first two project groups** survive rebuild. Extra project IDs act as trim fallbacks. Do not add `education-university-of-san-francisco-*` course IDs to `BUILDS` (stripped automatically).
 
 ## Closed assistance loop
 
 The agent should not hand-edit canonical `.tex` bullets when inventory IDs exist. Close the loop:
 
 ```
-resume/latex/MASTER-RESUME.tex          ← edit bullets + role tags here
+resume/latex/CURRICULUM-VITAE.tex     ← edit bullets + role tags here
         ↓
 resume/scripts/resume_builder.py        ← query IDs, compare variants
         ↓
@@ -39,7 +50,7 @@ resume/pdf/<role>.pdf
 
 | Step | Tool | When |
 |------|------|------|
-| Add/revise bullet variants | Edit `resume/latex/MASTER-RESUME.tex` | New experience, alternate phrasings |
+| Add/revise bullet variants | Edit `resume/latex/CURRICULUM-VITAE.tex` | New experience, alternate phrasings |
 | Discover what exists | `resume/scripts/resume_builder.py inventory` | Every resume task |
 | One-off JD tailoring | `resume_builder.py build --items ... --output resume/latex/generated-<role>.tex` | Single application, don't touch canonical |
 | Update canonical resumes | Edit `BUILDS` in `resume/scripts/rebuild_canonical_resumes.py`, then run it | User wants role `.tex` files updated repo-wide |
@@ -51,7 +62,7 @@ resume/pdf/<role>.pdf
 
 | Asset | Path |
 |-------|------|
-| Master inventory | `resume/latex/MASTER-RESUME.tex` |
+| CV inventory | `resume/latex/CURRICULUM-VITAE.tex` |
 | Query/build CLI | `resume/scripts/resume_builder.py` |
 | Canonical curation manifest | `resume/scripts/rebuild_canonical_resumes.py` |
 | Role guide (checklist) | `resume/job-titles/<ROLE>.md` |
@@ -218,13 +229,13 @@ Do not add experience the user does not have in master inventory.
 
 | Change | Where |
 |--------|-------|
-| New bullet variant for all roles | `resume/latex/MASTER-RESUME.tex` with role tags |
+| New bullet variant for all roles | `resume/latex/CURRICULUM-VITAE.tex` with role tags |
 | Which bullets appear on a role resume | `resume/scripts/rebuild_canonical_resumes.py` → `BUILDS[role].items` |
 | Trimmed skills for a role | `resume/scripts/rebuild_canonical_resumes.py` → `SKILLS[role]` |
 | Final application resume (generated) | `resume/latex/<role>.tex` via rebuild script |
 | New role entirely | Add tags to master, create `resume/job-titles/*.md`, add to `BUILDS` + `SKILLS`, run rebuild |
 
-After editing `resume/latex/MASTER-RESUME.tex`:
+After editing `resume/latex/CURRICULUM-VITAE.tex`:
 1. Re-run `python resume/scripts/resume_builder.py inventory --role <slug>` — IDs may shift if headings change
 2. Update `BUILDS` if any curated IDs broke
 3. Run `python3 resume/scripts/rebuild_canonical_resumes.py`
@@ -247,7 +258,8 @@ See [reference.md](reference.md) for full CLI flags and API.
 - [ ] Tagline matches role guide or user-requested JD tailoring
 - [ ] ACLU + SD County titles correct for role
 - [ ] No duplicate-theme bullets (one platform, one pipeline, one NLP, one deploy)
-- [ ] Projects match checklist count and ordering
+- [ ] Projects: **at most 2** technical project sections on application resumes
+- [ ] No USF course list on application resumes (degrees only)
 - [ ] Skills trimmed for role (from `SKILLS` in rebuild script, not master union)
 - [ ] No `\textit{[...]}` role tags left in output (builder strips them)
 - [ ] `resume/scripts/rebuild_canonical_resumes.py` updated if canonical resumes changed

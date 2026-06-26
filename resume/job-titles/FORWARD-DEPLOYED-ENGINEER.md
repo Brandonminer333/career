@@ -53,7 +53,8 @@ Overlaps with **AI Engineer** (ML/LLM systems), **Data Scientist** (custom analy
 - [ ] **ACLU title:** `Forward Deployed Engineer` or `Forward Deployed ML Engineer`.
 - [ ] **4 ACLU bullets:** Own delivery → embed/stakeholders → ship NLP system → deploy UI on private infra.
 - [ ] **3 SD bullets:** Cross-functional leadership → pipeline + quantified policy finding → mixed-effects for decisions.
-- [ ] **Projects:** California Grape and/or Quiz app (rapid build + deploy + UI).
+- [ ] **Projects:** At most **2** technical project sections (e.g. Quiz app + Parkcast).
+- [ ] **Education:** Degrees only on application resumes — no USF course list (courses stay on CV).
 - [ ] **Skills:** Deployment, private-server, GPU inference, FastAPI, React, Docker, GCP — before algorithm list.
 
 ## Suggested tagline
