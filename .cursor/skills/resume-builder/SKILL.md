@@ -255,8 +255,8 @@ See [reference.md](reference.md) for full CLI flags and API.
 
 ## Quality bar before delivery
 
+- [ ] **No em-dashes** ("—")
 - [ ] Tagline matches role guide or user-requested JD tailoring
-- [ ] ACLU + SD County titles correct for role
 - [ ] No duplicate-theme bullets (one platform, one pipeline, one NLP, one deploy)
 - [ ] Projects: **at most 2** technical project sections on application resumes
 - [ ] No USF course list on application resumes (degrees only)

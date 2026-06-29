@@ -22,6 +22,8 @@ LATEX_DIR = RESUME_ROOT / "latex"
 # Application resumes (not the CV): omit USF course lists; cap project sections.
 RESUME_MAX_PROJECTS = 2
 EDUCATION_COURSE_ID_PREFIX = "education-university-of-san-francisco-"
+# Community college / GE entries kept in CV inventory but omitted on one-page resumes.
+RESUME_EXCLUDED_EDUCATION_INSTITUTIONS = frozenset({"De Anza College"})
 
 PACKAGES = r"""
 \documentclass[letterpaper,11pt]{article}
@@ -166,7 +168,6 @@ SD_COUNTY_JOB = {
 ACLU_JOB_BASE = {
     "location": "San Francisco, CA",
     "organization": "ACLU",
-    "dates": "Oct 2025 -- Present",
 }
 
 
@@ -759,6 +760,8 @@ class Resume:
         selected_ids = set(item_ids or [])
         schools: list[EducationSchool] = []
         for school in inventory.education:
+            if school.institution in RESUME_EXCLUDED_EDUCATION_INSTITUTIONS:
+                continue
             highlights: list[InventoryItem] = []
             for item in school.highlights:
                 if item_ids is not None:
@@ -809,7 +812,7 @@ class Resume:
                         title=aclu_title,
                         location=ACLU_JOB_BASE["location"],
                         organization=ACLU_JOB_BASE["organization"],
-                        dates=ACLU_JOB_BASE["dates"],
+                        dates=job.dates,
                         bullets=bullets,
                     )
                 )
