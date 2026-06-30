@@ -2,7 +2,7 @@
 # Copy the default role PDF to portfolio/public/resume/resume.pdf for the live site.
 set -euo pipefail
 
-PORTFOLIO_RESUME="${PORTFOLIO_RESUME:-data-scientist}"
+PORTFOLIO_RESUME="${PORTFOLIO_RESUME:-forward-deployed-engineer}"
 
 RESUME_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 REPO_ROOT="$(cd "${RESUME_ROOT}/.." && pwd)"
