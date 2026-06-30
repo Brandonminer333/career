@@ -16,4 +16,4 @@ fi
 
 mkdir -p "$(dirname "${DEST}")"
 cp -f "${SOURCE}" "${DEST}"
-echo "Portfolio resume synced: ${PORTFOLIO_RESUME}.pdf -> portfolio/public/resume/Brandon-Miner-Resume.pdf"
+echo "Portfolio resume synced: ${PORTFOLIO_RESUME}.pdf -> portfolio/public/resume/resume.pdf"
