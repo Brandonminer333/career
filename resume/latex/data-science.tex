@@ -90,7 +90,7 @@
 
     % \begin{center}
     % \small
-    % Data Scientist — Statistical modeling, NLP pipelines, and end-to-end ML products in civic and public-interest contexts
+    % Forward Deployed Engineer — End-to-end ML systems on customer infrastructure --- from stakeholder needs through production deployment
     % \end{center}
 
 
@@ -99,11 +99,11 @@
 
     \resumeSubheading
     {University of San Francisco}{San Francisco, CA}
-    {M.S. in Data Science and Artificial Intelligence}{Jul 2025 -- Jun 2026}
+    {Master's of Science in Data Science and Artificial Intelligence}{Jul 2025 -- Jun 2026}
 
     \resumeSubheading
     {San Diego State University}{San Diego, CA}
-    {B.S. in Statistics with Emphasis in Data Science, Minor in Mathematics}{Aug 2022 -- Dec 2025}
+    {Bachelor's of Science in Statistics with Emphasis in Data Science, Minor in Mathematics}{Aug 2022 -- Dec 2024}
 
   \resumeSubHeadingListEnd
 
@@ -114,43 +114,39 @@
         {Data Scientist}{San Francisco, CA}
            {ACLU}{Oct 2025 -- Jun 2026}
             \resumeItemListStart
-                \resumeItem{Architecting the product development of an end-to-end ML video auditing platform from scratch (\textbf{Python, FastAPI, MySQL, Docker}) to automate data processing and analysis of unstructured police bodycam footage, projected to eliminate \textbf{300+ hours} of manual review per monthly cycle.}
-                \resumeItem{Developing a GPU-accelerated \textbf{ETL pipeline} using \textbf{FFmpeg} and \textbf{Whisper}-based speech-to-text to ingest, transcribe, and process batches of \textbf{600+ videos per month}; integrated \textbf{LLM-driven auto-labeling} to generate fine-tuning data for multi-stage text classification models extracting actionable audit signals.}
-                \resumeItem{Designed and trained \textbf{multi-stage NLP classifiers} on auto-labeled transcripts to detect use-of-force indicators, rights violations, and officer conduct patterns at scale.}
-                \resumeItem{Built a \textbf{private-server FastAPI backend} and \textbf{React.js} web frontend to deliver the full auditing system to non-technical stakeholders, enabling self-service model inference without engineering overhead.}
+                \resumeItem{Owned end-to-end delivery of a production \textbf{ML inference platform} (\textbf{Python, FastAPI, MySQL, Docker}) deployed directly on client hardware --- from requirements gathering through deployment --- eliminating \textbf{300+ hours} of manual review per monthly cycle.}
+                \resumeItem{Embedded with non-technical stakeholders to translate operational needs into a \textbf{GPU-accelerated ETL and inference pipeline} using \textbf{FFmpeg} and \textbf{Whisper ASR}, processing \textbf{600+ videos per month} with zero cloud dependency.}
+                \resumeItem{Architected and shipped a \textbf{multi-stage NLP classification system} combining LLM-assisted auto-labeling, iterative fine-tuning, and structured output parsing --- delivering audit-ready signals directly in the hands of end-users.}
+                \resumeItem{Deployed the full ML stack on a \textbf{private-server FastAPI backend} with a \textbf{React.js} web frontend, enabling non-technical civil rights investigators to run inference without any engineering support.}
            \resumeItemListEnd
 
         \resumeSubheading
         {Data Scientist, Lead Intern}{San Diego, CA}
            {San Diego County Taxpayers Association}{Mar 2024 -- Aug 2025}
             \resumeItemListStart
-                \resumeItem{Led data science initiatives, managing a team of \textbf{4+ associates} to deliver statistical insights on civil workforce economics and regional homelessness programs using statistical data analysis.}
-                \resumeItem{Built a public workforce analytics pipeline combining \textbf{iterative web scraping} and \textbf{NLP-based entity standardization} to clean and link heterogeneous salary records; applied regression modeling to quantify a \textbf{19.7\% police wage increase per 1\% staffing drop}.}
-                \resumeItem{Applied \textbf{mixed-effects regression models} with multicollinearity reduction (VIF analysis) to regional homelessness expenditure data, surfacing high-impact interventions such as rapid rehousing to guide resource allocation decisions.}
+                \resumeItem{Led a cross-functional team of \textbf{4 analysts} to build data pipelines and deliver analytical products directly to government stakeholders, translating messy public datasets into actionable policy insights.}
+                \resumeItem{Designed and deployed an end-to-end \textbf{data standardization pipeline} combining iterative web scraping and text normalization; applied regression modeling to quantify a \textbf{19.7\% police wage increase} per \textbf{1\%} staffing reduction --- findings presented to county officials.}
+                \resumeItem{Applied \textbf{mixed-effects regression} with VIF-based multicollinearity reduction to regional homelessness expenditure data; surfaced high-impact interventions to guide resource allocation decisions for program leadership.}
            \resumeItemListEnd
 
-        \resumeSubheading
-        {De Anza College}{Cupertino, CA}
-          {General Education}{Sep 2020 -- Jun 2022}
-       
     \resumeSubHeadingListEnd
 
 \section{Technical Projects}
     \resumeSubHeadingListStart
 
         \resumeProjectHeading
-        {\textbf{California Grape ETL Pipeline \& Dashboard}}{}
+        {\textbf{GenAI Franchise Personality Quiz}}{}
         \resumeItemListStart
-            \resumeItem{Engineered a \textbf{multi-source ETL pipeline} in Python to extract, transform, and consolidate disparate agricultural datasets into a unified schema optimized for downstream analysis.}
-            \resumeItem{\textbf{Developed an interactive Streamlit front-end} dashboard for real-time filtering and visualization of regional production metrics.}
-            \resumeItem{Developed an \textbf{interactive Streamlit dashboard} enabling end-users to dynamically visualize and filter regional production metrics; \href{https://streamlit-dashboard-189778219066.europe-west1.run.app/}{view live deployment}.}
+            \resumeItem{Built an end-to-end quiz generator: users describe any fictional class system in natural language; Gemini parses the franchise, scrapes Fandom wikis for canon characters, and roleplays each through 15 Likert questions to produce reference vectors asynchronously via FastAPI background jobs.}
+            \resumeItem{Deployed a split architecture on Vercel (frontend) and Google Cloud Run (API), with durable quiz artifacts in GCS, shareable quiz URLs, a community quiz library, and GitHub Actions CI (pre-commit, pytest, automated API deploy).}
         \resumeItemListEnd
 
         \resumeProjectHeading
-        {\textbf{Credit Card Fraud Detection}}{}
+        {\textbf{Parkcast-SF: San Francisco Parking Assistant}}{}
         \resumeItemListStart
-            \resumeItem{Built a binary classification model using \textbf{Logistic Regression (Scikit-Learn)} to identify fraudulent transactions on a highly imbalanced dataset.}
-            \resumeItem{Tuned classification threshold via \textbf{ROC-AUC analysis} to minimize False Negative Rate (missed fraud) while capping False Positive Rate at \textbf{under 2\%}.}
+            \resumeItem{Owned system design and the production \textbf{FastAPI} inference API for a full-stack USF capstone parking platform, serving block-level \textbf{LightGBM} occupancy predictions from artifacts in \textbf{GCS}.}
+            \resumeItem{Applied \textbf{K-nearest neighbors}-derived baselines to support \textbf{LightGBM} inference on sparse, non-metered blocks where direct sensor history was unavailable.}
+            \resumeItem{Built automated model \textbf{CI/CD} on \textbf{GCP}: scheduled \textbf{GitHub Actions} retraining with \textbf{MLflow} experiment tracking and a \textbf{champion/challenger} promotion gate (validation MAE) before GCS upload; split deploy across \textbf{Vercel} (frontend) and \textbf{Cloud Run} (API).}
         \resumeItemListEnd
 
     \resumeSubHeadingListEnd
@@ -159,13 +155,13 @@
 \vspace{-7pt}
     \begin{itemize}[leftmargin=0in, label={}]
         \item {\small
-            \textbf{Programming \& Statistical Tools}{: Python (Pandas, NumPy, Scikit-learn, PyTorch, Streamlit), R (tidyverse), SQL (PostgreSQL), Bash} \\
+            \textbf{Programming \& Frameworks}{: Python (FastAPI, PyTorch, Pandas), JavaScript (React.js), SQL (PostgreSQL), Bash} \\
 
-            \textbf{Modeling \& Analysis}{: regression, mixed-effects models, NLP pipelines, classification, PCA, multicollinearity reduction (VIF), ROC-AUC threshold optimization, imbalanced classification, experimental design} \\
+            \textbf{Delivery \& Infrastructure}{: Docker, Docker Compose, Google Cloud Run, private-server deployment, client-hardware deployment, GPU-accelerated inference, REST APIs, GitHub Actions CI/CD} \\
 
-            \textbf{Data Engineering}{: multi-source ETL pipelines, web scraping, text normalization, entity standardization} \\
+            \textbf{ML Systems}{: LLM-assisted labeling, NLP pipelines, multi-source ETL, batch inference, stakeholder requirements gathering} \\
 
-            \textbf{Communication \& Delivery}{: Streamlit dashboards, stakeholder-facing analytics, team leadership}
+            \textbf{Soft Skills}{: customer embedding, cross-functional leadership, communication with non-technical stakeholders}
         }
     \end{itemize}
 
